@@ -8,4 +8,4 @@ def do_login_whatsapp(driver):
         sleep(1)
         print('Abra o celular e escaneie o QR Code na tela por favor!..')
         print("WhatsApp carregado com sucesso.")
-    sleep(2)
+    sleep(5)
