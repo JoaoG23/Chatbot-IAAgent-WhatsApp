@@ -2,7 +2,7 @@ from time import sleep
 
 from selenium.webdriver.common.by import By
 
-from src.open_new_message_and_get_message.get_text_last_message.get_text_last_message import get_text_last_message
+from src.whatsapp.open_new_message_and_get_message.get_text_last_message.get_text_last_message import get_text_last_message
 
 def open_new_message_and_get_message(driver, message):
 

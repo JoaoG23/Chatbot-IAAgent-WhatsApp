@@ -1,9 +1,8 @@
 from datetime import datetime
-from time import sleep
 import os
+from time import sleep
 import traceback
 from dotenv import load_dotenv
-
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -12,71 +11,76 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+from src.general.change_to_screen.change_to_screen import change_to_screen
 
-from src.do_login_whatsapp.do_login_whatsapp import do_login_whatsapp
+from src.ai.get_answer_from_prompt.get_answer_from_prompt import get_answer_from_prompt
+from src.ai.send_question_to_prompt.send_question_to_prompt import send_question_to_prompt
+from src.ai.connect_and_create_prompt.connect_and_create_prompt import connect_and_create_prompt
+from src.ai.skip_box_do_want_signin.skip_box_do_want_signin import skip_box_do_want_signin
+
 from src.utils.logging.log_manager.log_manager import write_to_log
-from src.utils.move_to_file.move_to_file import move_to_file
-from src.verify_exists_new_messages_and_return_count.verify_exists_new_messages_and_return_count import verify_exists_new_messages_and_return_count
-from src.open_new_message_and_get_message.open_new_message_and_get_message import open_new_message_and_get_message
 
-options = webdriver.ChromeOptions()
-user_profile = "C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User Data\\Default"
-
-options.add_argument(f"user-data-dir={user_profile}")
-service = Service(ChromeDriverManager().install())
-
-driver = webdriver.Chrome(service=service, options=options)
+from src.whatsapp.do_login_whatsapp.do_login_whatsapp import do_login_whatsapp
+from src.whatsapp.verify_exists_new_messages_and_return_count.verify_exists_new_messages_and_return_count import verify_exists_new_messages_and_return_count
+from src.whatsapp.open_new_message_and_get_message.open_new_message_and_get_message import open_new_message_and_get_message
+from src.whatsapp.send_loading_message_in_whatsapp.send_loading_message_in_whatsapp import send_loading_message_in_whatsapp
+from src.whatsapp.insert_answer_to_whatsapp.insert_answer_to_whatsapp import insert_answer_to_whatsapp
+from src.whatsapp.send_message_to_whatsapp.send_message_to_whatsapp import send_message_to_whatsapp
 
 load_dotenv()
 
-def move_contacts_to_dir_exports(source_file):
-    datetime_now = datetime.now().strftime('%Y%m%d%H%M%S')
-    path_file_exported = os.path.join(os.getcwd(), 'exports', datetime_now +'.xlsx')
-    move_to_file(source_file, path_file_exported)
+user_profile = os.getenv('PATH_USER_PROFILE_CHROME')
 
-def connect_to_ai():
-    
-    pass
-    
-def connect_to_prompt():
-    pass
+options = webdriver.ChromeOptions()
+options.add_argument(f"user-data-dir={user_profile}")
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service, options=options)
 
-def send_question_to_prompt(question_text):
-    pass
+def exchange_messages_between_whatsapp_and_ai(driver):
+    if verify_exists_new_messages_and_return_count(driver) >= 1:
+        messages_found = driver.find_elements(By.CLASS_NAME, '_ahlk')
+        sleep(1)
+        messages_found.reverse()
+            
+        for message in messages_found:
+            sleep(1)
+            question_text = open_new_message_and_get_message(driver, message)
+            
+            # send_message_to_whatsapp(driver)
+            
+            change_to_screen(driver, 'ai')
+            
+            send_question_to_prompt(driver, question_text)
+            
+            skip_box_do_want_signin(driver)
 
-def get_answer_from_prompt():
-    pass
+            answer_text = get_answer_from_prompt(driver)
+            answer_text_linebreak = answer_text.replace("\n", " ")
+            
+            change_to_screen(driver, 'whatsapp')
+            
+            insert_answer_to_whatsapp(driver, answer_text_linebreak)
+            
+            write_to_log(f'Question: {question_text} to Response: {answer_text}')
 
-def insert_answer_to_whatsapp():
-    pass 
-        
+
 if __name__ == "__main__":
     try:
+        connect_and_create_prompt(driver)
+        
+        change_to_screen(driver, 'whatsapp')
+        
         do_login_whatsapp(driver)
-        sleep(2)
         
-        if verify_exists_new_messages_and_return_count(driver) >= 1:
-            messages_found = driver.find_elements(By.CLASS_NAME, '_ahlk')
-            sleep(1)
-            for message in messages_found:
-                sleep(1)
-                question_text = open_new_message_and_get_message(driver, message)
-            # while verify_exists_new_messages_and_return_count(driver) <= 0:
-            #     sleep(3)
-            #     print("Aguardando novas mensagens...")
-            # sleep(2)
-        # contacts_path = os.path.join(os.getcwd(), 'imports', 'contatos.xlsx')
-        
-        # contacts_df = get_contacts_excel(contacts_path)
-        
-        # clear_contacts_empty_rows_of_excel(contacts_df)
-            # input_message = WebDriverWait(driver, 15).until(
-    #     EC.presence_of_element_located((By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div/div[1]'))
-    # )
-    
-    # sleep(10)
-    # input_message.send_keys(Keys.ENTER)
-        
+        # exists_messages_in_whatsapp = 0
+        # while exists_messages_in_whatsapp < 1:
+        #     sleep(5)
+        #     print('Waiting for new messages...')
+        #     exists_messages_in_whatsapp = verify_exists_new_messages_and_return_count(driver)
+        # sleep(2)
+        while True:
+            exchange_messages_between_whatsapp_and_ai(driver)
+            sleep(10)
 
     except WebDriverException as e:
         write_to_log(traceback.format_exc(), 'error')
