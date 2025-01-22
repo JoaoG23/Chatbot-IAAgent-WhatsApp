@@ -12,12 +12,12 @@ def connect_and_create_prompt(driver):
     sleep(1)
     windows = driver.window_handles 
     driver.switch_to.window(windows[1])
-    sleep(12)
-    message_prompt = """Quero que atue como um Doutor chamado Carlos Xipoca, Cardiologista, quero que ajude a sanar as duvidas dos pacientes, com base nas mensagens que irei lhe enviar. Observação: Seja simples, objetivo, respostas curtas, no maximo 4 linhas"""
-    # message_prompt = get_text_from_file('templates/prompt.txt')
+    sleep(14)
+    # message_prompt = """Quero que atue como um Doutor chamado Carlos Xipoca, Cardiologista, quero que ajude a sanar as duvidas dos pacientes, com base nas mensagens que irei lhe enviar. Observação: Seja simples, objetivo, respostas curtas, no maximo 4 linhas"""
+    message_prompt = get_text_from_file('templates/prompt.txt')
     prompt_input = driver.find_element(By.XPATH, '//*[@id="userInput"]')
     prompt_input.send_keys(message_prompt)
     
     sleep(2)
     prompt_input.send_keys(Keys.ENTER)
-    sleep(2)
+    sleep(7)

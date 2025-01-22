@@ -16,5 +16,11 @@ webdriver-manager
     [x]. 4.1 - Obter a (resposta) após carregamento
 [x]. 5 - Enviar para o contato que enviou a mensagem no (Whatsapp)
 []. 6 - Adicionar filas para controlar ordem de chegada de mensagens
+[]. 7 - Criar rotina de resposta de mensagens de entre 20 a 30 segungos
 OBS: 
-[] - Analisar para verificar se haverá necessidade de uso de filas
+[x] - Analisar para verificar se haverá necessidade de uso de filas
+
+BUGS:
+[x] - Bug ao ler arquivos txt de prompt e loading..
+[] - Bug enves de enviar uma mensagem por prompt envia variadas de uma só vez. Risco de Whatsapp perceber
+se trata de um BOT

@@ -25,24 +25,21 @@ from src.utils.move_to_file.move_to_file import move_to_file
 from src.whatsapp.do_login_whatsapp.do_login_whatsapp import do_login_whatsapp
 from src.whatsapp.verify_exists_new_messages_and_return_count.verify_exists_new_messages_and_return_count import verify_exists_new_messages_and_return_count
 from src.whatsapp.open_new_message_and_get_message.open_new_message_and_get_message import open_new_message_and_get_message
-from src.whatsapp.send_welcome_message_in_whatsapp.send_welcome_message_in_whatsapp import send_welcome_message_in_whatsapp
+from src.whatsapp.send_loading_message_in_whatsapp.send_loading_message_in_whatsapp import send_loading_message_in_whatsapp
 
 options = webdriver.ChromeOptions()
 user_profile = "C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User Data\\Default"
 
 options.add_argument(f"user-data-dir={user_profile}")
 service = Service(ChromeDriverManager().install())
-
 driver = webdriver.Chrome(service=service, options=options)
 
 load_dotenv()
 
-def move_contacts_to_dir_exports(source_file):
-    datetime_now = datetime.now().strftime('%Y%m%d%H%M%S')
-    path_file_exported = os.path.join(os.getcwd(), 'exports', datetime_now +'.xlsx')
-    move_to_file(source_file, path_file_exported)
-
-
+# def move_contacts_to_dir_exports(source_file):
+#     datetime_now = datetime.now().strftime('%Y%m%d%H%M%S')
+#     path_file_exported = os.path.join(os.getcwd(), 'exports', datetime_now +'.xlsx')
+#     move_to_file(source_file, path_file_exported)
 
 
 def insert_answer_to_whatsapp(driver, answer_text):
@@ -51,7 +48,7 @@ def insert_answer_to_whatsapp(driver, answer_text):
     input_message.send_keys(answer_text)
     sleep(2)
     input_message.send_keys(Keys.ENTER)
-    sleep(14)
+    sleep(19)
     
 
     
@@ -69,7 +66,7 @@ if __name__ == "__main__":
                 sleep(1)
                 question_text = open_new_message_and_get_message(driver, message)
                 
-                send_welcome_message_in_whatsapp(driver)
+                send_loading_message_in_whatsapp(driver)
                 
                 change_to_screen(driver, 'ai')
                 
@@ -81,23 +78,6 @@ if __name__ == "__main__":
                 
                 insert_answer_to_whatsapp(driver, answer_text)
                 
-                
-        
-            # while verify_exists_new_messages_and_return_count(driver) <= 0:
-            #     sleep(3)
-            #     print("Aguardando novas mensagens...")
-            # sleep(2)
-        # contacts_path = os.path.join(os.getcwd(), 'imports', 'contatos.xlsx')
-        
-        # contacts_df = get_contacts_excel(contacts_path)
-        
-        # clear_contacts_empty_rows_of_excel(contacts_df)
-            # input_message = WebDriverWait(driver, 15).until(
-    #     EC.presence_of_element_located((By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div/div[1]'))
-    # )
-    
-    # sleep(10)
-    # input_message.send_keys(Keys.ENTER)
         
 
     except WebDriverException as e:
