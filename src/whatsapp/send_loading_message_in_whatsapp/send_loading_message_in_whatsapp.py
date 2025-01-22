@@ -10,5 +10,5 @@ def send_loading_message_in_whatsapp(driver):
     input_message.send_keys(welcome_text)
     sleep(2)
     input_message.send_keys(Keys.ENTER)
-    sleep(7)
+    sleep(4)
         
