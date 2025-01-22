@@ -20,12 +20,12 @@ from src.ai.send_question_to_prompt.send_question_to_prompt import send_question
 from src.ai.connect_and_create_prompt.connect_and_create_prompt import connect_and_create_prompt
 
 from src.utils.logging.log_manager.log_manager import write_to_log
-from src.utils.move_to_file.move_to_file import move_to_file
 
 from src.whatsapp.do_login_whatsapp.do_login_whatsapp import do_login_whatsapp
 from src.whatsapp.verify_exists_new_messages_and_return_count.verify_exists_new_messages_and_return_count import verify_exists_new_messages_and_return_count
 from src.whatsapp.open_new_message_and_get_message.open_new_message_and_get_message import open_new_message_and_get_message
 from src.whatsapp.send_loading_message_in_whatsapp.send_loading_message_in_whatsapp import send_loading_message_in_whatsapp
+from src.whatsapp.insert_answer_to_whatsapp.insert_answer_to_whatsapp import insert_answer_to_whatsapp
 
 options = webdriver.ChromeOptions()
 user_profile = "C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User Data\\Default"
@@ -41,15 +41,6 @@ load_dotenv()
 #     path_file_exported = os.path.join(os.getcwd(), 'exports', datetime_now +'.xlsx')
 #     move_to_file(source_file, path_file_exported)
 
-
-def insert_answer_to_whatsapp(driver, answer_text):
-    sleep(3)
-    input_message = driver.find_element(By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div/div[1]')
-    input_message.send_keys(answer_text)
-    sleep(2)
-    input_message.send_keys(Keys.ENTER)
-    sleep(19)
-    
 
     
 if __name__ == "__main__":
@@ -73,11 +64,13 @@ if __name__ == "__main__":
                 send_question_to_prompt(driver, question_text)
                 
                 answer_text = get_answer_from_prompt(driver)
+                print(answer_text)
                 
                 change_to_screen(driver, 'whatsapp')
                 
                 insert_answer_to_whatsapp(driver, answer_text)
                 
+                write_to_log(f'Question: {question_text} to Response: {answer_text}')
         
 
     except WebDriverException as e:
