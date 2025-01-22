@@ -10,4 +10,4 @@ def send_question_to_prompt(driver, question_text):
     sleep(3)
     prompt_input.send_keys(Keys.ENTER)
 
-    sleep(15)
+    sleep(17)

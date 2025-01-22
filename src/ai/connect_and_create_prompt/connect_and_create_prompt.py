@@ -21,3 +21,4 @@ def connect_and_create_prompt(driver):
     sleep(2)
     prompt_input.send_keys(Keys.ENTER)
     sleep(7)
+    

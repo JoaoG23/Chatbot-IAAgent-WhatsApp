@@ -1,9 +1,7 @@
 from datetime import datetime
 from time import sleep
-import os
 import traceback
 from dotenv import load_dotenv
-import queue
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -18,6 +16,7 @@ from src.general.change_to_screen.change_to_screen import change_to_screen
 from src.ai.get_answer_from_prompt.get_answer_from_prompt import get_answer_from_prompt
 from src.ai.send_question_to_prompt.send_question_to_prompt import send_question_to_prompt
 from src.ai.connect_and_create_prompt.connect_and_create_prompt import connect_and_create_prompt
+from src.ai.skip_box_do_want_signin.skip_box_do_want_signin import skip_box_do_want_signin
 
 from src.utils.logging.log_manager.log_manager import write_to_log
 
@@ -36,44 +35,75 @@ driver = webdriver.Chrome(service=service, options=options)
 
 load_dotenv()
 
-# def move_contacts_to_dir_exports(source_file):
-#     datetime_now = datetime.now().strftime('%Y%m%d%H%M%S')
-#     path_file_exported = os.path.join(os.getcwd(), 'exports', datetime_now +'.xlsx')
-#     move_to_file(source_file, path_file_exported)
+
+def exchange_messages_between_whatsapp_and_ai(driver):
+    if verify_exists_new_messages_and_return_count(driver) >= 1:
+        messages_found = driver.find_elements(By.CLASS_NAME, '_ahlk')
+        sleep(1)
+        messages_found.reverse()
+            
+        for message in messages_found:
+            sleep(1)
+            question_text = open_new_message_and_get_message(driver, message)
+            
+            
+            send_loading_message_in_whatsapp(driver)
+            
+            change_to_screen(driver, 'ai')
+            
+            send_question_to_prompt(driver, question_text)
+            
+            skip_box_do_want_signin(driver)
+
+            answer_text = get_answer_from_prompt(driver)
+            answer_text_linebreak = answer_text.replace("\n", " ")
+            
+            change_to_screen(driver, 'whatsapp')
+            
+            insert_answer_to_whatsapp(driver, answer_text_linebreak)
+            
+            write_to_log(f'Question: {question_text} to Response: {answer_text}')
 
 
-    
 if __name__ == "__main__":
     try:
-        fila = queue.Queue()
         do_login_whatsapp(driver)
         connect_and_create_prompt(driver)
         change_to_screen(driver, 'whatsapp')
         
-        if verify_exists_new_messages_and_return_count(driver) >= 1:
-            messages_found = driver.find_elements(By.CLASS_NAME, '_ahlk')
-            sleep(1)
-            messages_found.reverse()
+        exists_messages_in_whatsapp = 0
+        while exists_messages_in_whatsapp < 1:
+            sleep(5)
+            print('Waiting for new messages...')
+            exists_messages_in_whatsapp = verify_exists_new_messages_and_return_count(driver)
+        sleep(2)
+        exchange_messages_between_whatsapp_and_ai(driver)
+             
+        # if verify_exists_new_messages_and_return_count(driver) >= 1:
+        #     messages_found = driver.find_elements(By.CLASS_NAME, '_ahlk')
+        #     sleep(1)
+        #     messages_found.reverse()
             
-            for message in messages_found:
-                sleep(1)
-                question_text = open_new_message_and_get_message(driver, message)
+        #     for message in messages_found:
+        #         sleep(1)
+        #         question_text = open_new_message_and_get_message(driver, message)
                 
-                send_loading_message_in_whatsapp(driver)
+        #         send_loading_message_in_whatsapp(driver)
                 
-                change_to_screen(driver, 'ai')
+        #         change_to_screen(driver, 'ai')
                 
-                send_question_to_prompt(driver, question_text)
+        #         send_question_to_prompt(driver, question_text)
                 
-                answer_text = get_answer_from_prompt(driver)
-                answer_text_linebreak = answer_text.replace("\n", "    ")
-                print(answer_text)
+        #         skip_box_do_want_signin(driver)
                 
-                change_to_screen(driver, 'whatsapp')
+        #         answer_text = get_answer_from_prompt(driver)
+        #         answer_text_linebreak = answer_text.replace("\n", " ")
                 
-                insert_answer_to_whatsapp(driver, answer_text_linebreak)
+        #         change_to_screen(driver, 'whatsapp')
                 
-                write_to_log(f'Question: {question_text} to Response: {answer_text}')
+        #         insert_answer_to_whatsapp(driver, answer_text_linebreak)
+                
+        #         write_to_log(f'Question: {question_text} to Response: {answer_text}')
         
 # box # //*[@id="app"]/main/div[3]/div[2]/div/div[2]/div/div[1]/div/div/div
 # button //*[@id="app"]/main/div[3]/div[2]/div/div[2]/div/div[1]/div/div/div/button[2]
