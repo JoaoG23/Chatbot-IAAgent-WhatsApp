@@ -21,8 +21,8 @@ Este projeto automatiza o envio e recebimento de mensagens via WhatsApp Web, uti
 Antes de iniciar, crie o arquivo `.env` com as seguintes variáveis:
 
 ```env
-AI_USERNAME='jguilhermeempresarial@outlook.com'
-AI_PASSWORD='dev2561!*:99'
+AI_USERNAME=''
+AI_PASSWORD=''
 PATH_USER_PROFILE_CHROME="C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User Data\\Default"
 ```
 
