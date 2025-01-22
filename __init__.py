@@ -3,7 +3,7 @@ from time import sleep
 import os
 import traceback
 from dotenv import load_dotenv
-
+import queue
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -45,6 +45,7 @@ load_dotenv()
     
 if __name__ == "__main__":
     try:
+        fila = queue.Queue()
         do_login_whatsapp(driver)
         connect_and_create_prompt(driver)
         change_to_screen(driver, 'whatsapp')
@@ -52,6 +53,7 @@ if __name__ == "__main__":
         if verify_exists_new_messages_and_return_count(driver) >= 1:
             messages_found = driver.find_elements(By.CLASS_NAME, '_ahlk')
             sleep(1)
+            messages_found.reverse()
             
             for message in messages_found:
                 sleep(1)
@@ -64,15 +66,18 @@ if __name__ == "__main__":
                 send_question_to_prompt(driver, question_text)
                 
                 answer_text = get_answer_from_prompt(driver)
+                answer_text_linebreak = answer_text.replace("\n", "    ")
                 print(answer_text)
                 
                 change_to_screen(driver, 'whatsapp')
                 
-                insert_answer_to_whatsapp(driver, answer_text)
+                insert_answer_to_whatsapp(driver, answer_text_linebreak)
                 
                 write_to_log(f'Question: {question_text} to Response: {answer_text}')
         
-
+# box # //*[@id="app"]/main/div[3]/div[2]/div/div[2]/div/div[1]/div/div/div
+# button //*[@id="app"]/main/div[3]/div[2]/div/div[2]/div/div[1]/div/div/div/button[2]
+# title="Talvez mais tarde"
     except WebDriverException as e:
         write_to_log(traceback.format_exc(), 'error')
         print(f"Erro ao rodar automação")

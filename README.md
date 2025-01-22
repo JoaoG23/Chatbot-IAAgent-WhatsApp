@@ -1,6 +1,6 @@
 # Chatbot-IAAgent-WhatsApp
 
-Time: 8
+Time: 9,5
 Chrome Browser
 selenium
 webdriver-manager
@@ -16,7 +16,7 @@ webdriver-manager
 [x]. 4 - Enviar mensagem para IA
 [x]. 4.1 - Obter a (resposta) após carregamento da IA 
 [x]. 5 - Enviar para o contato que enviou a mensagem no (Whatsapp)
-[]. 6 - Adicionar filas para controlar ordem de chegada de mensagens
+[x]. 6 - Adicionar FIFO para controlar ordem de chegada de mensagens, primeiro que entra e primeiro que sai
 []. 7 - Criar rotina de resposta de mensagens de entre 20 a 30 segungos
 OBS: 
 [x] - Analisar para verificar se haverá necessidade de uso de filas
@@ -24,5 +24,4 @@ OBS:
 🐛BUGS: 
 
 [x] - Bug ao ler arquivos txt de prompt e loading..
-[] - Bug enves de enviar uma mensagem por prompt envia variadas de uma só vez. Risco de Whatsapp perceber
-se trata de um BOT
+[] - Bug enves de enviar uma mensagem por prompt envia variadas de uma só vez. Risco de Whatsapp perceber se trata de um BOT

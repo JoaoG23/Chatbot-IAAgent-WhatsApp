@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 
 def get_answer_from_prompt(driver):
 
-    sleep(1)
+    sleep(3)
     
     box_messages = driver.find_elements(By.CLASS_NAME, 'space-y-3')
     
