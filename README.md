@@ -4,6 +4,7 @@
 
 Este projeto automatiza o envio e recebimento de mensagens via WhatsApp Web, utilizando inteligência artificial para gerar respostas. A comunicação com a IA ocorre via integração com a plataforma Copilot.
 
+Time: 14 hs
 ---
 
 ## Tecnologias Utilizadas 🛠️
@@ -56,6 +57,7 @@ PATH_USER_PROFILE_CHROME="C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User
 8. **Ignorar Alertas**
    - Pula qualquer alerta ou quadro pop-up para garantir a fluidez do processo.
 
+
 ---
 
 ## Requisitos
@@ -66,7 +68,7 @@ PATH_USER_PROFILE_CHROME="C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User
 2. **Dependências Python**  
    Instale os pacotes necessários:
    ```bash
-   pip install selenium webdriver-manager python-dotenv
+   pip install -r requirements.txt
    ```
 
 3. **Execução**

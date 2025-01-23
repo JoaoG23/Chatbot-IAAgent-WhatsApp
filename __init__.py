@@ -8,16 +8,17 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-from src.general.change_to_screen.change_to_screen import change_to_screen
 
 from src.ai.get_answer_from_prompt.get_answer_from_prompt import get_answer_from_prompt
 from src.ai.send_question_to_prompt.send_question_to_prompt import send_question_to_prompt
 from src.ai.connect_and_create_prompt.connect_and_create_prompt import connect_and_create_prompt
 from src.ai.skip_box_do_want_signin.skip_box_do_want_signin import skip_box_do_want_signin
 
+from src.utils.remove_linebreak_text.remove_linebreak_text import remove_linebreak_text
+from src.utils.remove_emojis_text.remove_emojis_text import remove_emojis_text
+from src.utils.change_to_screen.change_to_screen import change_to_screen
 from src.utils.logging.log_manager.log_manager import write_to_log
 
 from src.whatsapp.do_login_whatsapp.do_login_whatsapp import do_login_whatsapp
@@ -25,7 +26,8 @@ from src.whatsapp.verify_exists_new_messages_and_return_count.verify_exists_new_
 from src.whatsapp.open_new_message_and_get_message.open_new_message_and_get_message import open_new_message_and_get_message
 from src.whatsapp.send_loading_message_in_whatsapp.send_loading_message_in_whatsapp import send_loading_message_in_whatsapp
 from src.whatsapp.insert_answer_to_whatsapp.insert_answer_to_whatsapp import insert_answer_to_whatsapp
-from src.whatsapp.send_message_to_whatsapp.send_message_to_whatsapp import send_message_to_whatsapp
+from src.whatsapp.close_chat.close_chat import close_chat
+# from src.whatsapp.send_message_to_whatsapp.send_message_to_whatsapp import send_message_to_whatsapp
 
 load_dotenv()
 
@@ -46,22 +48,25 @@ def exchange_messages_between_whatsapp_and_ai(driver):
             sleep(1)
             question_text = open_new_message_and_get_message(driver, message)
             
-            # send_message_to_whatsapp(driver)
+            send_loading_message_in_whatsapp(driver)
             
             change_to_screen(driver, 'ai')
             
-            send_question_to_prompt(driver, question_text)
+            send_question_to_prompt(driver, remove_linebreak_text(question_text))
             
             skip_box_do_want_signin(driver)
 
             answer_text = get_answer_from_prompt(driver)
-            answer_text_linebreak = answer_text.replace("\n", " ")
+            answer_text_linebreak = remove_linebreak_text(answer_text)
+            answer_text_linebreak = remove_emojis_text(answer_text_linebreak)
             
             change_to_screen(driver, 'whatsapp')
             
             insert_answer_to_whatsapp(driver, answer_text_linebreak)
             
-            write_to_log(f'Question: {question_text} to Response: {answer_text}')
+            close_chat(driver)
+            
+            write_to_log(f'Question: {question_text} to Response: {answer_text_linebreak}')
 
 
 if __name__ == "__main__":
@@ -72,15 +77,9 @@ if __name__ == "__main__":
         
         do_login_whatsapp(driver)
         
-        # exists_messages_in_whatsapp = 0
-        # while exists_messages_in_whatsapp < 1:
-        #     sleep(5)
-        #     print('Waiting for new messages...')
-        #     exists_messages_in_whatsapp = verify_exists_new_messages_and_return_count(driver)
-        # sleep(2)
         while True:
             exchange_messages_between_whatsapp_and_ai(driver)
-            sleep(10)
+            sleep(12)
 
     except WebDriverException as e:
         write_to_log(traceback.format_exc(), 'error')
