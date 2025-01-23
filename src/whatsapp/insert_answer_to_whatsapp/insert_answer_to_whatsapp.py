@@ -8,5 +8,5 @@ def insert_answer_to_whatsapp(driver, answer_text):
     input_message.send_keys(answer_text)
     sleep(2)
     input_message.send_keys(Keys.ENTER)
-    sleep(13)
+    sleep(10)
     

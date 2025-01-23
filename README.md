@@ -4,6 +4,7 @@
 
 Este projeto automatiza o envio e recebimento de mensagens via WhatsApp Web, utilizando inteligência artificial para gerar respostas. A comunicação com a IA ocorre via integração com a plataforma Copilot.
 
+Time: 2 horas
 ---
 
 ## Tecnologias Utilizadas 🛠️
@@ -55,6 +56,7 @@ PATH_USER_PROFILE_CHROME="C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User
 
 8. **Ignorar Alertas**
    - Pula qualquer alerta ou quadro pop-up para garantir a fluidez do processo.
+
 
 ---
 
