@@ -2,7 +2,7 @@ from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from src.general.get_text_from_file.get_text_from_file import get_text_from_file
+from src.utils.get_text_from_file.get_text_from_file import get_text_from_file
 
 def send_message_to_whatsapp(driver):
     sleep(1)

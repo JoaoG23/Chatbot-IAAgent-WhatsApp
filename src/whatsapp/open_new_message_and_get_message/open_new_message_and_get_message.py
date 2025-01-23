@@ -13,7 +13,7 @@ def open_new_message_and_get_message(driver, message):
     message_labels = driver.find_elements(By.CLASS_NAME, '_akbu')
     
     if len(message_labels) > 0:
-        sleep(2)
+        sleep(5)
         message_text = get_text_last_message(driver)
         sleep(1)
         return message_text

@@ -10,14 +10,15 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-from src.general.remove_emojis_text.remove_emojis_text import remove_emojis_text
-from src.general.change_to_screen.change_to_screen import change_to_screen
 
 from src.ai.get_answer_from_prompt.get_answer_from_prompt import get_answer_from_prompt
 from src.ai.send_question_to_prompt.send_question_to_prompt import send_question_to_prompt
 from src.ai.connect_and_create_prompt.connect_and_create_prompt import connect_and_create_prompt
 from src.ai.skip_box_do_want_signin.skip_box_do_want_signin import skip_box_do_want_signin
 
+from src.utils.remove_linebreak_text.remove_linebreak_text import remove_linebreak_text
+from src.utils.remove_emojis_text.remove_emojis_text import remove_emojis_text
+from src.utils.change_to_screen.change_to_screen import change_to_screen
 from src.utils.logging.log_manager.log_manager import write_to_log
 
 from src.whatsapp.do_login_whatsapp.do_login_whatsapp import do_login_whatsapp
@@ -51,12 +52,12 @@ def exchange_messages_between_whatsapp_and_ai(driver):
             
             change_to_screen(driver, 'ai')
             
-            send_question_to_prompt(driver, question_text)
+            send_question_to_prompt(driver, remove_linebreak_text(question_text))
             
             skip_box_do_want_signin(driver)
 
             answer_text = get_answer_from_prompt(driver)
-            answer_text_linebreak = answer_text.replace("\n", " ")
+            answer_text_linebreak = remove_linebreak_text(answer_text)
             answer_text_linebreak = remove_emojis_text(answer_text_linebreak)
             
             change_to_screen(driver, 'whatsapp')
@@ -78,7 +79,6 @@ if __name__ == "__main__":
         
         while True:
             exchange_messages_between_whatsapp_and_ai(driver)
-            # Voltar para mensagem de si mesmo
             sleep(12)
 
     except WebDriverException as e:
