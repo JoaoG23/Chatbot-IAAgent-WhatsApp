@@ -38,45 +38,54 @@ options.add_argument(f"user-data-dir={user_profile}")
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
-def exchange_messages_between_whatsapp_and_ai(driver):
-    if verify_exists_new_messages_and_return_count(driver) >= 1:
-        messages_found = driver.find_elements(By.CLASS_NAME, '_ahlk')
-        sleep(1)
-        messages_found.reverse()
-            
-        for message in messages_found:
+class ChatbotIAAgentWhatsApp:
+    def __init__(self):
+        self.driver = driver
+        
+    def exchange_messages_between_whatsapp_and_ai(self):
+        if verify_exists_new_messages_and_return_count(self.driver) >= 1:
+            messages_found = self.driver.find_elements(By.CLASS_NAME, '_ahlk')
             sleep(1)
-            question_text = open_new_message_and_get_message(driver, message)
-            
-            send_loading_message_in_whatsapp(driver)
-            
-            change_to_screen(driver, 'ai')
-            
-            send_question_to_prompt(driver, remove_linebreak_text(question_text))
-            
-            skip_box_do_want_signin(driver)
+            messages_found.reverse()
+                
+            for message in messages_found:
+                sleep(1)
+                # WHATSAPP
+                question_text = open_new_message_and_get_message(self.driver, message)
+                
+                send_loading_message_in_whatsapp(self.driver)
+                
+                # IA
+                change_to_screen(self.driver, 'ai')
+                
+                send_question_to_prompt(self.driver, remove_linebreak_text(question_text))
+                
+                skip_box_do_want_signin(self.driver)
 
-            answer_text = get_answer_from_prompt(driver)
-            answer_text_linebreak = remove_linebreak_text(answer_text)
-            answer_text_linebreak = remove_emojis_text(answer_text_linebreak)
-            
-            change_to_screen(driver, 'whatsapp')
-            
-            insert_answer_to_whatsapp(driver, answer_text_linebreak)
-            
-            close_chat(driver)
+                answer_text = get_answer_from_prompt(self.driver)
+                answer_text_linebreak = remove_linebreak_text(answer_text)
+                answer_text_linebreak = remove_emojis_text(answer_text_linebreak)
+                
+                change_to_screen(self.driver, 'whatsapp')
+                # WHATSAPP
+                insert_answer_to_whatsapp(self.driver, answer_text_linebreak)
+                
+                close_chat(self.driver)
+    
+    def run_automation(self):
+        connect_and_create_prompt(self.driver)
+        
+        change_to_screen(self.driver, 'whatsapp')
+        
+        do_login_whatsapp(self.driver)
+        
+        while True:
+            self.exchange_messages_between_whatsapp_and_ai()
+            sleep(10)
             
 if __name__ == "__main__":
     try:
-        connect_and_create_prompt(driver)
-        
-        change_to_screen(driver, 'whatsapp')
-        
-        do_login_whatsapp(driver)
-        
-        while True:
-            exchange_messages_between_whatsapp_and_ai(driver)
-            sleep(2)
+        ChatbotIAAgentWhatsApp().run_automation()
 
     except WebDriverException as e:
         write_to_log(traceback.format_exc(), 'error')

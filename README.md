@@ -4,7 +4,7 @@
 
 Este projeto automatiza o envio e recebimento de mensagens via WhatsApp Web, utilizando inteligência artificial para gerar respostas. A comunicação com a IA ocorre via integração com a plataforma Copilot.
 
-Time: 14 hs
+Time: 15 hs
 ---
 
 ## Tecnologias Utilizadas 🛠️
@@ -31,33 +31,34 @@ PATH_USER_PROFILE_CHROME="C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User
 
 ## Tarefas Implementadas ✔️
 
-1. **Login no WhatsApp Web**
-   - A automação realiza o login no WhatsApp utilizando o perfil do usuário já configurado no Chrome.
+1.**Login no WhatsApp Web**
+- A automação realiza o login no WhatsApp utilizando o perfil do usuário já configurado no Chrome.
+2.**Verificação de Mensagens**
+- Detecta mensagens não lidas no WhatsApp.
+3.**Login na IA (Copilot)**
+- Faz login na plataforma Copilot com as credenciais fornecidas.
+4.**Interação com Mensagens**
+- Envia uma mensagem de boas-vindas ao contato.
+- Captura a última pergunta recebida.
+- Gera uma resposta através da IA.
+5.**Envio de Respostas**
+- Retorna a resposta gerada pela IA ao contato no WhatsApp.
+6.**Controle FIFO**
+- Gerencia a ordem de resposta das mensagens, priorizando a ordem de chegada.
+7.**Intervalo de Respostas**
+- Define um intervalo randômico entre 5 a 10 segundos entre cada resposta.
+8.**Ignorar Alertas**
+- Pula qualquer alerta ou quadro pop-up para garantir a fluidez do processo.
 
-2. **Verificação de Mensagens**
-   - Detecta mensagens não lidas no WhatsApp.
-
-3. **Login na IA (Copilot)**
-   - Faz login na plataforma Copilot com as credenciais fornecidas.
-
-4. **Interação com Mensagens**
-   - Envia uma mensagem de boas-vindas ao contato.
-   - Captura a última pergunta recebida.
-   - Gera uma resposta através da IA.
-
-5. **Envio de Respostas**
-   - Retorna a resposta gerada pela IA ao contato no WhatsApp.
-
-6. **Controle FIFO**
-   - Gerencia a ordem de resposta das mensagens, priorizando a ordem de chegada.
-
-7. **Intervalo de Respostas**
-   - Define um intervalo randômico entre 5 a 10 segundos entre cada resposta.
-
-8. **Ignorar Alertas**
-   - Pula qualquer alerta ou quadro pop-up para garantir a fluidez do processo.
 
 ---
+## Nova Tarefas ✨
+
+Adicionar possibilidade de uso de novas IAs:
+
+   Whatsapp Enviar -> Perguntas -> Sistema verifica qual ia selecionada -> IA
+   IA Retorna -> Respostas -> Whatsapp;
+
 
 ## Observações
 
