@@ -9,4 +9,4 @@ def change_to_screen(driver, name_screen = 'whatsapp'):
         driver.switch_to.window(windows[1])
         return
     driver.switch_to.window(windows[0])
-    sleep(3)
+    sleep(2)

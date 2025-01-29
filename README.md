@@ -57,6 +57,11 @@ PATH_USER_PROFILE_CHROME="C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User
 8. **Ignorar Alertas**
    - Pula qualquer alerta ou quadro pop-up para garantir a fluidez do processo.
 
+---
+
+## Observações
+
+1. Nunca escreva o seu prompt entre ""
 
 ---
 

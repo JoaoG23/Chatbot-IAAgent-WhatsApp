@@ -66,9 +66,6 @@ def exchange_messages_between_whatsapp_and_ai(driver):
             
             close_chat(driver)
             
-            write_to_log(f'Question: {question_text} to Response: {answer_text_linebreak}')
-
-
 if __name__ == "__main__":
     try:
         connect_and_create_prompt(driver)
@@ -79,7 +76,7 @@ if __name__ == "__main__":
         
         while True:
             exchange_messages_between_whatsapp_and_ai(driver)
-            sleep(12)
+            sleep(2)
 
     except WebDriverException as e:
         write_to_log(traceback.format_exc(), 'error')
