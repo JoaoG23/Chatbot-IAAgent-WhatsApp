@@ -1,5 +1,5 @@
 ((
-    Vaga: Desenvolvedor(a) Java Pleno, Presencial, Belo Ostracismo, MG, Brazil
+    Vaga: Desenvolvedor(a) Java Pleno, Só Presencial ou Hibrido 2x semana, Belo Ostracismo, MG, Brazil
 
 Se você é apaixonado(a) por tecnologia, gosta de desafios e deseja desenvolver soluções inovadoras, venha fazer parte de um time que transforma ideias em resultados!
 
@@ -9,6 +9,7 @@ Você será responsável por desenvolver, manter e documentar soluções de soft
 Salário: 7500,00 a 9000,00 R$, não negociamos salarios acima disso;
 Modalidade: CLT;
 Horário de 8:00 as 17:00 hs:
+Com Plano de Saúde, Plano Odontologico.
 
 Nicho: Sistema de segurança em geral e controle de acessos de pessoas, veiculos;
 

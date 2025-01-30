@@ -1,4 +1,3 @@
-from datetime import datetime
 import os
 from time import sleep
 import traceback
@@ -10,6 +9,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
+from src.ai.ai_connections.ConnectionsManager import ConnectionsManager
 
 from src.ai.get_answer_from_prompt.get_answer_from_prompt import get_answer_from_prompt
 from src.ai.send_question_to_prompt.send_question_to_prompt import send_question_to_prompt
@@ -43,6 +43,9 @@ class ChatbotIAAgentWhatsApp:
         self.driver = driver
         
     def exchange_messages_between_whatsapp_and_ai(self):
+        
+        ai = ConnectionsManager(self.driver)
+        
         if verify_exists_new_messages_and_return_count(self.driver) >= 1:
             messages_found = self.driver.find_elements(By.CLASS_NAME, '_ahlk')
             sleep(1)
@@ -56,24 +59,18 @@ class ChatbotIAAgentWhatsApp:
                 send_loading_message_in_whatsapp(self.driver)
                 
                 # IA
-                change_to_screen(self.driver, 'ai')
-                
-                send_question_to_prompt(self.driver, remove_linebreak_text(question_text))
-                
-                skip_box_do_want_signin(self.driver)
-
-                answer_text = get_answer_from_prompt(self.driver)
-                answer_text_linebreak = remove_linebreak_text(answer_text)
-                answer_text_linebreak = remove_emojis_text(answer_text_linebreak)
+                ai.select_ai_send_question(question_text)
+                answer_text = ai.select_ai_get_answer()
+                # IA
                 
                 change_to_screen(self.driver, 'whatsapp')
                 # WHATSAPP
-                insert_answer_to_whatsapp(self.driver, answer_text_linebreak)
+                insert_answer_to_whatsapp(self.driver, answer_text)
                 
                 close_chat(self.driver)
     
     def run_automation(self):
-        connect_and_create_prompt(self.driver)
+        # connect_and_create_prompt(self.driver)
         
         change_to_screen(self.driver, 'whatsapp')
         
