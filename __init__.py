@@ -9,15 +9,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-from src.ai.ai_connections.ConnectionsManager import ConnectionsManager
+from src.ai.ai_connections.ConnectionsManagerAI import ConnectionsManagerAI
 
-from src.ai.get_answer_from_prompt.get_answer_from_prompt import get_answer_from_prompt
-from src.ai.send_question_to_prompt.send_question_to_prompt import send_question_to_prompt
-from src.ai.connect_and_create_prompt.connect_and_create_prompt import connect_and_create_prompt
-from src.ai.skip_box_do_want_signin.skip_box_do_want_signin import skip_box_do_want_signin
-
-from src.utils.remove_linebreak_text.remove_linebreak_text import remove_linebreak_text
-from src.utils.remove_emojis_text.remove_emojis_text import remove_emojis_text
 from src.utils.change_to_screen.change_to_screen import change_to_screen
 from src.utils.logging.log_manager.log_manager import write_to_log
 
@@ -27,7 +20,6 @@ from src.whatsapp.open_new_message_and_get_message.open_new_message_and_get_mess
 from src.whatsapp.send_loading_message_in_whatsapp.send_loading_message_in_whatsapp import send_loading_message_in_whatsapp
 from src.whatsapp.insert_answer_to_whatsapp.insert_answer_to_whatsapp import insert_answer_to_whatsapp
 from src.whatsapp.close_chat.close_chat import close_chat
-# from src.whatsapp.send_message_to_whatsapp.send_message_to_whatsapp import send_message_to_whatsapp
 
 load_dotenv()
 
@@ -44,8 +36,7 @@ class ChatbotIAAgentWhatsApp:
         
     def exchange_messages_between_whatsapp_and_ai(self):
         
-        ai = ConnectionsManager(self.driver)
-        
+        ai = ConnectionsManagerAI(self.driver)
         if verify_exists_new_messages_and_return_count(self.driver) >= 1:
             messages_found = self.driver.find_elements(By.CLASS_NAME, '_ahlk')
             sleep(1)
@@ -59,9 +50,7 @@ class ChatbotIAAgentWhatsApp:
                 send_loading_message_in_whatsapp(self.driver)
                 
                 # IA
-                ai.select_ai_send_question(question_text)
-                answer_text = ai.select_ai_get_answer()
-                # IA
+                answer_text = ai.connect_ia_and_whatsapp(question_text)
                 
                 change_to_screen(self.driver, 'whatsapp')
                 # WHATSAPP
@@ -78,7 +67,7 @@ class ChatbotIAAgentWhatsApp:
         
         while True:
             self.exchange_messages_between_whatsapp_and_ai()
-            sleep(10)
+            sleep(7)
             
 if __name__ == "__main__":
     try:
@@ -89,7 +78,8 @@ if __name__ == "__main__":
         print(f"Erro ao rodar automação")
     except Exception as e:
         write_to_log(traceback.format_exc(), 'error')
-        print(f"Erro ao rodar automação")
+        # print(f"Erro ao rodar automação")
+        print(e)
     finally:
         print("Encerrando automação")
         driver.quit()   

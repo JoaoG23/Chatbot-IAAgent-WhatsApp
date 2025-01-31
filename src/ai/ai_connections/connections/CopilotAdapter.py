@@ -14,8 +14,6 @@ class CopilotAdapter(AIConnectionInterface):
     
     def send_question(self, question_text):
         
-        # change_to_screen(self.driver, 'ai')
-            
         send_question_to_prompt(self.driver, remove_linebreak_text(question_text))
         
         skip_box_do_want_signin(self.driver)

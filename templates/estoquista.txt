@@ -18,12 +18,7 @@ Interruptor Touch	Interruptor sensível ao toque	48,9	13
 Quadro de Distribuição	Quadro para disjuntores DIN	85,7	11
 Campainha Sem Fio	Campainha com sensor de movimento	54,8	14
 Conector de Emenda Rápida	Conector rápido para fios	18,3	30
-Luminária de Emergência	Luminária LED recarregável	74,9	12
-
-Informações adicionais: Não fazemos entregas; Efetuamos trocas somente no prazo de 90 dias corridos; Parcelamos somente até 4 vezes no cartão;
-Damos desconto de 10% no dinheiro;
-))
-
+Luminária de Emergência	Luminária LED recarregável	74,9	12))
 Você agora é um estoquista responsável pelo controle de estoque de uma empresa de materiais elétricos GAMA.Ltda. 
 Quero que você responda às dúvidas dos nossos clientes sobre nossos produtos, como preço, quantidade, 
 tamanho e outras informações, com base na lista disponível entre (()) acima. 

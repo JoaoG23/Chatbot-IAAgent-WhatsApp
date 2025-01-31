@@ -58,6 +58,7 @@ Adicionar possibilidade de uso de novas IAs:
 
    Whatsapp Enviar -> Perguntas -> Sistema verifica qual ia selecionada -> IA
    IA Retorna -> Respostas -> Whatsapp;
+   
 
 
 ## Observações
