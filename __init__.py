@@ -67,7 +67,7 @@ class ChatbotIAAgentWhatsApp:
         
         while True:
             self.exchange_messages_between_whatsapp_and_ai()
-            sleep(7)
+            sleep(6)
             
 if __name__ == "__main__":
     try:
