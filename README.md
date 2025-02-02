@@ -1,115 +1,96 @@
-# Chatbot-IAAgent-WhatsApp-To-Copilot 🤖💬
+## Chatbot IA - WhatsApp 🤖
 
-## Introdução
+<img src="./assets/icon.ico" align="right">
 
-Este projeto automatiza o envio e recebimento de mensagens via WhatsApp Web, utilizando inteligência artificial para gerar respostas. A comunicação com a IA ocorre via integração com a plataforma Copilot.
+### 1. Introdução  
 
-Time: 14 hs
----
+**Tempo estimado:** 16 horas
 
-## Tecnologias Utilizadas 🛠️
+Este projeto automatiza a interação com usuários via WhatsApp utilizando IA (Gemini ou Copilot). O sistema captura mensagens recebidas, processa a solicitação através de uma IA selecionada e retorna a resposta ao usuário.
 
-- **Python**
-- **Selenium**
-- **webdriver-manager**
-- **Google Chrome**
+### 2. Tecnologias Utilizadas 📲  
 
----
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Google Chrome](https://img.shields.io/badge/Google_Chrome-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.google.com/chrome/)
+[![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)](https://www.selenium.dev/)
+[![Webdriver Manager](https://img.shields.io/badge/Webdriver_Manager-20232A?style=for-the-badge&logo=python&logoColor=white)](https://pypi.org/project/webdriver-manager/)
+[![Gemini AI](https://img.shields.io/badge/Gemini_AI-ff9800?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![Copilot](https://img.shields.io/badge/Copilot-24A148?style=for-the-badge&logo=github&logoColor=white)](https://github.com/features/copilot)
 
-## Configuração ✨
+### 3. Estrutura do Projeto 📂  
 
-### Arquivo `.env`
-Antes de iniciar, crie o arquivo `.env` com as seguintes variáveis:
-
-```env
-AI_USERNAME=''
-AI_PASSWORD=''
-PATH_USER_PROFILE_CHROME="C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User Data\\Default"
+```
+├── logs/                 # Armazena logs do sistema
+├── src/                  # Código-fonte principal
+├── templates/            # Templates de mensagens (se necessário)
+├── __init__.py           # Arquivo principal do projeto
+├── .env                  # Configurações do ambiente
+├── .gitignore            # Arquivos ignorados pelo Git
+├── LICENSE               # Licença do projeto
+├── README.md             # Documentação do projeto
+├── requirements.txt      # Dependências do projeto
 ```
 
----
+### 4. Instalação 🛠️  
 
-## Tarefas Implementadas ✔️
+#### Passos para instalar:  
 
-1. **Login no WhatsApp Web**
-   - A automação realiza o login no WhatsApp utilizando o perfil do usuário já configurado no Chrome.
+1. Clone o repositório:  
+   ```bash  
+   git clone https://github.com/JoaoG23/chatbot-whatsapp-ia.git  
+   ```  
+2. Instale as dependências:  
+   ```bash  
+   pip install -r requirements.txt  
+   ```  
+3. Crie um arquivo `.env` com o seguinte conteúdo:  
+   ```env  
+   AI_USERNAME=''  # Se necessário
+   AI_PASSWORD=''
+   
+   PATH_USER_PROFILE_CHROME="C:\\Users\\joaog\\AppData\\Local\\Google\\Chrome\\User Data\\Default"
+   IA_MODEL='gemini'  # Modelos suportados: 'gemini', 'copilot'
+   
+   AI_TOKEN=''  # Token de autenticação da IA
+   ```  
+4. Execute o sistema:
+   ```bash  
+   python __init__.py  
+   ```  
 
-2. **Verificação de Mensagens**
-   - Detecta mensagens não lidas no WhatsApp.
+### 5. Funcionalidades ✔️  
 
-3. **Login na IA (Copilot)**
-   - Faz login na plataforma Copilot com as credenciais fornecidas.
+- [x] Acessa o WhatsApp Web.
+- [x] Aguarda o usuário fazer login com QR Code.
+- [x] Captura mensagens recebidas em tempo real.
+- [x] Identifica o questionamento do usuário.
+- [x] Verifica qual IA foi selecionada.
+- [x] Envia a mensagem para a IA com base no prompt.
+- [x] Retorna a resposta ao WhatsApp e finaliza a interação.
 
-4. **Interação com Mensagens**
-   - Envia uma mensagem de boas-vindas ao contato.
-   - Captura a última pergunta recebida.
-   - Gera uma resposta através da IA.
+### 6. Benefícios e Limitações 🛠️  
 
-5. **Envio de Respostas**
-   - Retorna a resposta gerada pela IA ao contato no WhatsApp.
+#### Benefícios:  
+- Automatiza o atendimento via WhatsApp.
+- Permite escalabilidade com múltiplos modelos de IA.
+- Baixo acoplamento graças ao padrão Adapter.
 
-6. **Controle FIFO**
-   - Gerencia a ordem de resposta das mensagens, priorizando a ordem de chegada.
+#### Limitações:  
+- Necessário acesso à internet.
+- Restrições de segurança do WhatsApp Web podem afetar o funcionamento.
 
-7. **Intervalo de Respostas**
-   - Define um intervalo randômico entre 5 a 10 segundos entre cada resposta.
-
-8. **Ignorar Alertas**
-   - Pula qualquer alerta ou quadro pop-up para garantir a fluidez do processo.
-
----
-
-## Observações
-
-1. Nunca escreva o seu prompt entre ""
-
----
-
-## Requisitos
-
-1. **Google Chrome**  
-   Certifique-se de que o navegador está instalado e configurado com o perfil correto.
-
-2. **Dependências Python**  
-   Instale os pacotes necessários:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Execução**
-   Rode o script principal:
-   ```bash
-   python __init__.py
-   ```
-
----
-
-## Benefícios 💡
-
-- **Automatização Completa:** Gerencia mensagens do WhatsApp automaticamente, com respostas geradas por IA.
-- **Otimização de Tempo:** Processa várias mensagens simultaneamente, respeitando a ordem de chegada.
-- **Integração Direta com Copilot:** Garante respostas rápidas e inteligentes.
-
----
-
-## Possíveis Melhorias 🚀
-
-- Implementar logs detalhados para auditoria de mensagens enviadas e recebidas.
-- Adicionar tratamento de erros para conexões instáveis ou interrupções no login.
-- Incluir suporte para personalização de mensagens de boas-vindas e respostas.
-
-
-## Autor  
+### 7. Autor  
 
  <img style="border-radius:50%;" src="https://avatars.githubusercontent.com/u/80895578?v=4" width="100px;" alt=""/>  
  <br />  
  <sub><b>Joao Guilherme</b></sub></a> <a href="https://github.com/JoaoG23/">🚀</a>  
 
-Developed with 🤖 by Joao Guilherme 👋🏽 Contact me via:  
+Desenvolvido com 🤖 por Joao Guilherme 👋🏽 Entre em contato:  
 
 [![Linkedin Badge](https://shields.io/badge/-Joao%20Guilherme-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/joaog123/)](https://www.linkedin.com/in/joaog123/)  
 [![Email Badge](https://shields.io/badge/-joaoguilherme94@live.com-c80?style=flat-square&logo=Microsoft&logoColor=white&link=mailto:joaoguilherme94@live.com)](mailto:joaoguilherme94@live.com)  
 
-## License 📄  
+## 8. Licença 📄  
 
-[![License](https://shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENCE)
+[![License](https://shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE)  
+
