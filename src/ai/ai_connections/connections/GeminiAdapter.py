@@ -23,13 +23,28 @@ class GeminiAdapter(AIConnectionInterface):
         }
         
         payload = {
-                "contents": [
+            "contents": [
                 {
+                    "role": "assistant",
                     "parts": [
-                        {"text": f"{prompt_without_linebreak}\n\n{question_text}"},
+                        {
+                            "text": f"{prompt_without_linebreak}"
+                        }
+                    ]
+                },
+                {
+                    "role": "user",
+                    "parts": [
+                        {
+                            "text": f"{question_text}"
+                        }
                     ]
                 }
-            ]
+            ],
+            "generation_config": {
+                "candidate_count": 1,
+                "temperature": 0.5
+            }
         }
         try:
             response = requests.post(URL, headers=headers, json=payload)
