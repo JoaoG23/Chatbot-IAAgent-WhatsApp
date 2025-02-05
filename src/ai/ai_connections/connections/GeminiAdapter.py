@@ -42,12 +42,12 @@ class GeminiAdapter(AIConnectionInterface):
                 }
             ],
             "generation_config": {
-                "candidate_count": 1,
-                "temperature": 0.5
+                # "candidate_count": 1,
+                "temperature": 0.7
             }
         }
         try:
-            response = requests.post(URL, headers=headers, json=payload)
+            response = requests.post(URL, headers=headers, json=payload, timeout=60)
             response.raise_for_status()  # Lança exceção para status 4xx/5xx
             
             # Verifica se o conteúdo é JSON válido

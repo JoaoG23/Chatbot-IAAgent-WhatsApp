@@ -46,7 +46,7 @@ class ChatbotIAAgentWhatsApp:
                 sleep(1)
                 # WHATSAPP
                 question_text = open_new_message_and_get_message(self.driver, message)
-                
+                sleep(8)
                 send_loading_message_in_whatsapp(self.driver)
                 
                 # IA
