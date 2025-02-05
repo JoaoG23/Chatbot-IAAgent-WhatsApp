@@ -27,6 +27,7 @@ user_profile = os.getenv('PATH_USER_PROFILE_CHROME')
 
 options = webdriver.ChromeOptions()
 options.add_argument(f"user-data-dir={user_profile}")
+options.add_argument("--headless==new")
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
